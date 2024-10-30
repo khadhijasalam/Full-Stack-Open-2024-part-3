@@ -1,11 +1,16 @@
 // console.log("hello")
 const express=require('express')
 const app=express()
-
+const morgan=require('morgan')
 
 app.use(express.json())
 
-// app.engine('views',)
+
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
+
+
+morgan.token('data', function (req, res) { return JSON.stringify(req.body) })
 
 let phonebook=[
   { 
@@ -64,8 +69,8 @@ app.post('/api/persons',(req,res)=>{
     name:body.name,
     number:body.number
   }
-  console.log(entry)
-  console.log(req.headers)
+  // console.log(entry)
+  // console.log(req.headers)
   phonebook= phonebook.concat(entry)
  
 
@@ -95,4 +100,6 @@ app.delete('/api/persons/:id',(req,res)=>{
 
 
 const port=3001
-app.listen(port)
+app.listen(port,()=>{
+  console.log(`server running on port ${port}`)
+})
