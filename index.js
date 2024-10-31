@@ -2,8 +2,11 @@
 const express=require('express')
 const app=express()
 const morgan=require('morgan')
+const cors= require('cors')
 
 app.use(express.json())
+app.use(cors())
+app.use(express.static('dist'))
 
 
 
@@ -30,11 +33,6 @@ let phonebook=[
   },
   { 
     "id": "4",
-    "name": "Mary Poppendieck", 
-    "number": "39-23-6423122"
-  },
-  { 
-    "id": "5",
     "name": "Mary Poppendieck", 
     "number": "39-23-6423122"
   }
@@ -99,7 +97,8 @@ app.delete('/api/persons/:id',(req,res)=>{
 
 
 
-const port=3001
-app.listen(port,()=>{
-  console.log(`server running on port ${port}`)
+const PORT = process.env.PORT || 3001
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
 })
